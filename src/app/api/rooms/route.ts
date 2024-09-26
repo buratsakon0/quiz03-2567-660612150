@@ -1,15 +1,14 @@
 import { DB, readDB, writeDB } from "@lib/DB";
 import { checkToken } from "@lib/checkToken";
 import { nanoid } from "nanoid";
-import { headers } from "next/headers";
 import { NextRequest, NextResponse } from "next/server";
 
 export const GET = async () => {
   readDB();
   return NextResponse.json({
     ok: true,
-    rooms: (<any>DB).rooms,
-    totalRooms: (<any>DB).rooms.length
+    rooms: (<DB>DB).rooms,
+    totalRooms: (<DB>DB).rooms.length
   });
 };
 
@@ -30,7 +29,7 @@ export const POST = async (request: NextRequest) => {
   const { roomName } = body;
   
   readDB();
-  const room = (<any>DB).rooms.find((x: { roomName: any; }) => x.roomName === roomName)
+  const room = (<DB>DB).rooms.find((x: { roomName: any; }) => x.roomName === roomName)
 
   if(room){
     return NextResponse.json(
@@ -44,7 +43,7 @@ export const POST = async (request: NextRequest) => {
 
 
   const roomId = nanoid();
-  (<any>DB).rooms.push({
+  (<DB>DB).rooms.push({
     roomId,
     roomName,
   });

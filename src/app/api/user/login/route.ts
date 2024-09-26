@@ -8,7 +8,7 @@ export const POST = async (request: NextRequest) => {
   const {username, password} = body;
   readDB();
   
-  const user = (<any>DB).users.find((u: { username: any; password: any; })=> u.username === username && u.password === password)
+  const user = (<DB>DB).users.find((u: { username: any; password: any; })=> u.username === username && u.password === password)
 
   if(!user){
     return NextResponse.json(
