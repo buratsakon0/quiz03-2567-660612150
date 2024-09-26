@@ -29,7 +29,7 @@ export const POST = async (request: NextRequest) => {
   const { roomName } = body;
   
   readDB();
-  const room = (<DB>DB).rooms.find((x: { roomName: any; }) => x.roomName === roomName)
+  const room = (<DB>DB).rooms.find((x) => x.roomName === roomName)
 
   if(room){
     return NextResponse.json(

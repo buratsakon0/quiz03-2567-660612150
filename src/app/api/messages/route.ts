@@ -6,7 +6,7 @@ import { NextRequest, NextResponse } from "next/server";
 export const GET = async (request: NextRequest) => {
   const roomId = request.nextUrl.searchParams.get("roomId");
   readDB();
-  const room = (<any>DB).rooms.find((x: { roomId: string | null; }) => x.roomId == roomId);
+  const room = (<DB>DB).rooms.find((x) => x.roomId == roomId);
   if (!room) {
     return NextResponse.json(
       {
@@ -17,7 +17,7 @@ export const GET = async (request: NextRequest) => {
     );
   }
 
-  const message = (<any>DB).messages.filter((x: { roomId: string | null; }) => x.roomId == roomId);
+  const message = (<DB>DB).messages.filter((x) => x.roomId == roomId);
   return NextResponse.json({
     ok: true,
     message,
@@ -29,7 +29,7 @@ export const POST = async (request: NextRequest) => {
   const { roomId, messageText } = body;
   readDB();
 
-  const room = (<any>DB).rooms.find((x: { roomId: any; }) => x.roomId === roomId);
+  const room = (<DB>DB).rooms.find((x) => x.roomId === roomId);
   if (!room) {
     return NextResponse.json(
       {
@@ -42,7 +42,7 @@ export const POST = async (request: NextRequest) => {
 
 
   const messageId = nanoid();
-  (<any>DB).messages.push({
+  (<DB>DB).messages.push({
     roomId,
     messageId,
     messageText,
