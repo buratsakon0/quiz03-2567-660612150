@@ -74,7 +74,7 @@ export const DELETE = async (request: NextRequest) => {
 
 
   readDB();
-  const messageIdx = (<any>DB).messages.findIndex((x: { messageId: any; }) => x.messageId === messageId);
+  const messageIdx = (<DB>DB).messages.findIndex((x) => x.messageId === messageId);
   if(messageIdx === -1){
     return NextResponse.json(
       {
@@ -84,7 +84,7 @@ export const DELETE = async (request: NextRequest) => {
       { status: 404 }
     );
   }
-  (<any>DB).messages.splice(messageIdx, 1);
+  (<DB>DB).messages.splice(messageIdx, 1);
   writeDB();
 
   return NextResponse.json({
